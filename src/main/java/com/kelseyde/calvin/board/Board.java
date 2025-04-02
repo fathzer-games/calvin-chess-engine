@@ -398,6 +398,10 @@ public class Board {
         return move.isEnPassant() || pieceAt(move.to()) != null;
     }
 
+    public boolean isNoisy(Move move) {
+        return move.isPromotion() || isCapture(move);
+    }
+
     public boolean isQuiet(Move move) {
         return !move.isPromotion() && !isCapture(move);
     }
@@ -434,6 +438,10 @@ public class Board {
 
     public long getPieces(boolean white) {
         return bitboards[white ? Piece.WHITE_PIECES : Piece.BLACK_PIECES];
+    }
+
+    public long[] getBitboards() {
+        return bitboards;
     }
 
     public void setPawns(long pawns) {
@@ -579,6 +587,10 @@ public class Board {
             case QUEEN -> getQueens(white);
             case KING -> getKing(white);
         };
+    }
+
+    public long getPieces(int pieceIndex, int colourIndex) {
+        return bitboards[pieceIndex] & bitboards[Piece.COUNT + colourIndex];
     }
 
 
